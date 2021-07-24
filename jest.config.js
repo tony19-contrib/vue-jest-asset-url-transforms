@@ -20,13 +20,26 @@ const newJestPreset = merge(vueJestPreset, {
   },
 })
 
-// Make sure our transform takes precedence over the default one
-newJestPreset.transform = {
-  '\\.png$': '<rootDir>/tests/jest-url-loader',
-  ...newJestPreset.transform,
+function useUrlLoaderForImages(preset) {
+  const imageTypes = ['jpg', 'jpeg', 'png', 'svg', 'gif', 'webp']
+  const imageTypesRegex = new RegExp(`(${imageTypes.join('|')})\\|?`, 'ig')
+
+  // remove the image types from the transforms
+  Object.entries(preset.transform).filter(([key]) => {
+    const regex = new RegExp(key)
+    return imageTypes.some(ext => regex.test(`filename.${ext}`))
+  }).forEach(([key, value]) => {
+    delete preset.transform[key]
+    const newKey = key.replace(imageTypesRegex, '')
+    preset.transform[newKey] = value
+  })
+
+  preset.transform = {
+    ...preset.transform,
+    [`.+\\.(${imageTypes.join('|')})$`]: '<rootDir>/tests/jest-url-loader',
+  }
 }
 
-module.exports = {
-  preset: '@vue/cli-plugin-unit-jest',
-  ...newJestPreset,
-}
+useUrlLoaderForImages(newJestPreset)
+
+module.exports = newJestPreset
