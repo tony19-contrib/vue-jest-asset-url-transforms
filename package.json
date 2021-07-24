@@ -22,6 +22,7 @@
     "@vue/test-utils": "^1.1.3",
     "eslint": "^7.20.0",
     "eslint-plugin-vue": "^7.6.0",
+    "lodash.merge": "^4.6.2",
     "vue-jest": "^4.0.1",
     "vue-template-compiler": "^2.6.11"
   }
