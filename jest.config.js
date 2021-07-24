@@ -22,7 +22,7 @@ const newJestPreset = merge(vueJestPreset, {
 
 // Make sure our transform takes precedence over the default one
 newJestPreset.transform = {
-  '\\.png$': '<rootDir>/tests/jest-url-transform',
+  '\\.png$': '<rootDir>/tests/jest-url-loader',
   ...newJestPreset.transform,
 }
 
