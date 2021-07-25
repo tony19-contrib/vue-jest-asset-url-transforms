@@ -36,7 +36,7 @@ function useUrlLoaderForImages(preset) {
 
   preset.transform = {
     ...preset.transform,
-    [`.+\\.(${imageTypes.join('|')})$`]: '<rootDir>/tests/jest-url-loader',
+    [`.+\\.(${imageTypes.join('|')})$`]: '<rootDir>/tests/my-jest-url-loader',
   }
 }
 
